@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Tasktodo web</title>
+    <style>
+        *{
+           font-weight:bold;
+           color:black;
+           font-size:30px;
+           padding-left:50px;
+
+           }
+        h1{
+           color:red;
+           text-align:center;
+           }
+        #edit{
+            display: inline-block; /* Makes the box take the size of its content */
+            padding: 10px; /* Add some padding for spacing */
+            border: 2px solid #333; /* Add a border with a color of your choice */
+            background-color: #1462D8; /* Set the background color */
+            text-decoration: none;
+            color: white; /* Set the text color */
+            font-weight: bold;
+            font-size:15px;
+
+        }
+        #delete{
+        display: inline-block; /* Makes the box take the size of its content */
+            padding: 10px; /* Add some padding for spacing */
+            border: 2px solid #333; /* Add a border with a color of your choice */
+            background-color: red; /* Set the background color */
+            text-decoration: none;
+            color: white; /* Set the text color */
+            font-weight: bold;
+            font-size:15px;
+
+          }
+          #check{
+        display: inline-block; /* Makes the box take the size of its content */
+            padding: 10px; /* Add some padding for spacing */
+            border: 2px solid #333; /* Add a border with a color of your choice */
+            background-color:green; /* Set the background color */
+            text-decoration: none;
+            color: white; /* Set the text color */
+            font-weight: bold;
+            font-size:15px;
+          }
+        p{
+        color:black;
+        font-size:20px;
+        }
+    </style>
+</head>
+<body>
+   <h1 >
+      My Daily Task Tracker
+   </h1>
+   <p>
+       YOU DONT WANT TO REMEMBER , JUST NOTE IT HERE :)
+   </p>
+   <ul >
+       {% for todo in todos  %}
+         <li>
+             <input class="input"  type="checkbox" name = "done" {% if todo ['done'] %} checked {%endif%} disable onchange="this.form.submit()">
+
+             <span {%if todo['done'] %} style="text-decoration: line-through" {%endif%}>{{ todo['task'] }}</span>
+             <br>
+             <a id = 'edit' href="{{ url_for('edit' , index=loop.index0) }}">Edit</a>
+             <a id ='delete' href="{{ url_for('delete' , index=loop.index0) }}">Delete</a>
+             <a id= 'check' href="{{ url_for('check' , index=loop.index0) }}">Check</a>
+
+         </li>
+       {%endfor%}
+   </ul>
+   <form action="{{ url_for('add') }}" method ="post">
+       <input type="text" name="todo">
+       <button type="submit" > Add Note</button>
+   </form>
+</body>
+</html>
